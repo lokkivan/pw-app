@@ -22,13 +22,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth:api'], function () {
-
     // USERS
-    Route::group(['prefix' => '/users'], function () {
-        Route::get('', [UserController::class, 'index']);
-        Route::get('all', [UserController::class, 'all']);
-        Route::put('block', [UserController::class, 'block']);
+
+     Route::group(['prefix' => '/users'], function () {
+         Route::group(['middleware' => 'can:index,' . \App\Models\User::class], function () {
+            Route::get('', [UserController::class, 'index']);
+         });
+         Route::group(['middleware' => 'can:update,' . \App\Models\User::class], function () {
+             Route::put('block', [UserController::class, 'block']);
+         });
+         Route::get('all', [UserController::class, 'all']);
     });
+
 
     // TRANSACTIONS
     Route::group(['prefix' => '/transactions'], function () {
@@ -38,20 +43,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     Route::post('logout', [LoginController::class, 'logout']);
-
     Route::get('user', [UserController::class, 'current']);
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', [LoginController::class, 'login']);
     Route::post('register', [RegisterController::class, 'register']);
-
-    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
-    Route::post('password/reset', [ResetPasswordController::class, 'reset']);
-
-    Route::post('email/verify/{user}', [VerificationController::class, 'verify'])->name('verification.verify');
-    Route::post('email/resend', [VerificationController::class, 'resend']);
-
-    Route::post('oauth/{driver}', [OAuthController::class, 'redirect']);
-    Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
 });
