@@ -28,7 +28,7 @@
    
 6. Command to create your own super user
     ```bash
-    create:super-user
+    php artisan create:super-user
     ``` 
 ## Usage
 
