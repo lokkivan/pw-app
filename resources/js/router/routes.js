@@ -1,37 +1,41 @@
+function page (path) {
+  return () => import(/* webpackChunkName: '' */ `~/pages/${path}`).then(m => m.default || m)
+}
+
 export default [
   {
     path: '/',
     name: 'home',
-    component: () => import('~/pages/home'),
+    component: page('home.vue'),
     meta: { title: 'Home' }
   },
   {
     path: '/users',
     name: 'users',
-    component: () => import('~/pages/users'),
+    component: page('users.vue'),
     meta: { title: 'Users' }
   },
   {
     path: '/transactions',
     name: 'transactions',
-    component: () => import('~/pages/transactions'),
+    component: page('transactions.vue'),
     meta: { title: 'Transactions' }
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('~/pages/auth/login'),
+    component: page('auth/login.vue'),
     meta: { title: 'Login' }
   },
   {
     path: '/register',
     name: 'register',
-    component: () => import('~/pages/auth/register'),
+    component: page('auth/register.vue'),
     meta: { title: 'Register' }
   },
   {
     path: '*',
-    component: () => import('~/pages/errors/404'),
+    component: page('errors/404.vue'),
     meta: { title: 'Register' }
   }
 ]

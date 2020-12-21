@@ -87,6 +87,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "SearchBar",
+  middleware: 'auth',
   components: { CreateTransaction },
   data() {
     return {

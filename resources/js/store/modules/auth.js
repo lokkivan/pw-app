@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import * as types from '../mutation-types'
-import { login } from '../../api/auth'
+import { login} from '../../api/auth'
 
 
 // state
@@ -56,6 +56,9 @@ export const actions = {
   saveToken ({ commit, dispatch }, payload) {
     commit(types.SAVE_TOKEN, payload)
   },
+  fetchUserFailure({ commit }) {
+    commit(types.FETCH_USER_FAILURE)
+  },
 
   async fetchUser ({ commit }) {
     try {
@@ -83,6 +86,21 @@ export const actions = {
         commit('SET_IS_LOADING', false);
         resolve();
       }).catch(error => {
+        commit('SET_IS_LOADING', false);
+        reject(error);
+      })
+    })
+  },
+
+  setMyProfile({ commit }) {
+    return new Promise((resolve, reject) => {
+      commit('SET_IS_LOADING', true);
+      setMyProfile().then((response) => {
+        commit(types.FETCH_USER_SUCCESS, { user: response.user })
+        commit('SET_IS_LOADING', false);
+        resolve();
+      }).catch(error => {
+        commit(types.FETCH_USER_FAILURE)
         commit('SET_IS_LOADING', false);
         reject(error);
       })
