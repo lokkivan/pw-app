@@ -21,9 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         User::observe(UserObserver::class);
         Transaction::observe(TransactionObserver::class);
-        if ($this->app->runningUnitTests()) {
-            Schema::defaultStringLength(191);
-        }
+        Schema::defaultStringLength(191);
     }
 
     /**

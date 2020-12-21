@@ -1,8 +1,6 @@
 {
-    "name": "cretueusebiu/laravel-vue-spa",
-    "description": "A Laravel-Vue SPA starter project template.",
-    "keywords": ["spa", "laravel", "vue"],
-    "license": "MIT",
+    "name": "pw-app",
+    "description": "PW Application",
     "type": "project",
     "require": {
         "php": "^7.3|^8.0",
